@@ -9,11 +9,23 @@ public class Date implements Datable {
     private final int month;
     private final int day;
     private final int year;
+//    private final boolean SmartDate;
 
     public Date(int month, int day, int year) {
         this.month = month;
         this.day = day;
         this.year = year;
+//        if(month>12||month<1){
+//            this.SmartDate=false;
+//        }
+//        else if (day>32)
+//            this.SmartDate=false;
+//        else
+//        //假设每年每月都是31天.
+//            this.SmartDate=true;
+//        if (!SmartDate){
+//            throw new RuntimeException("Wrong time!!!!!!");
+//        }
     }
 
     public int getMonth() {
