@@ -24,7 +24,12 @@ public class FixedCapacityStackOfStrings {
     public int size(){
         return N;
     }
-
+    public boolean isFull(){
+        if(N==Max)
+            return true;
+        else
+            return false;
+    }
     public static void main(String[] args){
 
     }
