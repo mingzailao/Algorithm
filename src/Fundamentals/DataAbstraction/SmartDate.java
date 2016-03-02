@@ -22,19 +22,20 @@ public class SmartDate extends Date implements Datable  {
     }
 
     @Override
-    public int getMonth() {
-        return super.getMonth();
+    public int month() {
+        return super.month();
     }
 
     @Override
-    public int getDay() {
-        return super.getDay();
+    public int day() {
+        return super.day();
     }
 
     @Override
-    public int getYear() {
-        return super.getYear();
+    public int year() {
+        return super.year();
     }
+
     public String dayOfTheWeek(){
         return "";
     }
