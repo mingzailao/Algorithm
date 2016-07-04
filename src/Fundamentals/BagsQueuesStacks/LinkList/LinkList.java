@@ -1,5 +1,7 @@
 package Fundamentals.BagsQueuesStacks.LinkList;
 
+import edu.princeton.cs.algs4.StdOut;
+
 import java.util.Iterator;
 
 /**
@@ -8,9 +10,23 @@ import java.util.Iterator;
 public class LinkList<Item> implements Iterable<Item> {
     private Node first;//the first node of the linklist;
     private int N;//size of the linklist;
-    private class Node{
+    protected class Node{
         Item item;
         Node next;
+    }
+    public void push(Item item){
+        Node oldFirst=first;
+        Node a=new Node();
+        a.item=item;
+        a.next=oldFirst;
+        first=a;
+        N++;
+    }
+    public Item pop(){
+        Item item=first.item;
+        first=first.next;
+        N--;
+        return item;
     }
     public void HeadAdd(Item item){
         Node oldfirst=first;
@@ -94,7 +110,7 @@ public class LinkList<Item> implements Iterable<Item> {
         }
 
     }
-    public boolean find(LinkList<Item> list, String key){
+    public boolean find(LinkList<Item> list,Item key){
         if (list.first.item.equals(key)){
             return true;
         }
@@ -184,5 +200,43 @@ public class LinkList<Item> implements Iterable<Item> {
         public void remove() {
 
         }
+    }
+    public int max(LinkList<Integer> l){
+        int max=0;
+        for (int item :
+                l) {
+            if (max < item){
+                max=item;
+            }
+        }
+        return max;
+    }
+    public static void main(String[] args){
+        LinkList<Integer> linkListA=new LinkList<Integer>();
+        for (int i = 0; i < 10; i++) {
+            linkListA.push(i);
+        }
+        linkListA.delete(1);
+        Iterator<Integer> i=linkListA.iterator();
+        while (i.hasNext()){
+            int item=i.next();
+            StdOut.println(item);
+        }//8,7,6,5,4,3,2,1,0
+        StdOut.println(linkListA.find(linkListA,2));//true
+        StdOut.println(linkListA.find(linkListA,9));//false
+
+        linkListA.removeAfter(linkListA.first.next.next.next.next.next.next);
+        for (int item :
+                linkListA) {
+            StdOut.println(item);
+        }
+        linkListA.insertAfter(linkListA.first,linkListA.first.next.next);
+        for (int item :
+                linkListA) {
+            StdOut.println(item);
+        }
+        linkListA.delete(1);
+        StdOut.println(linkListA.max(linkListA));
+
     }
 }

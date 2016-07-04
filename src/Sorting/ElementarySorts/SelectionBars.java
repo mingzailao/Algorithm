@@ -42,8 +42,9 @@ public class SelectionBars {
     }
 
     public static void main(String[] args) {
-        int N = Integer.parseInt(args[0]);
-        StdDraw.setCanvasSize(160, 640);
+//        int N = Integer.parseInt(args[0]);
+        int N=10;
+        StdDraw.setCanvasSize(640, 640);
         StdDraw.setXscale(-1, N+1);
         StdDraw.setPenRadius(.006);
         double[] a = new double[N];

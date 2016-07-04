@@ -1,5 +1,6 @@
 package Fundamentals.BagsQueuesStacks;
 
+import Fundamentals.BagsQueuesStacks.LinkList.Bag;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 

@@ -1,35 +1,84 @@
 package Fundamentals.DataAbstraction;
 
+import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by apple on 16/2/25.
  */
 public class Accumulator {
-    private double total;
-    private int N;
+    private int n = 0;          // number of data values
+    private double sum = 0.0;   // sample variance * (n-1)
+    private double mu = 0.0;    // sample mean
 
+    /**
+     * Initializes an accumulator.
+     */
     public Accumulator() {
     }
-    public void addDataValue(double val){
-        N++;
-        total+=val;
-    }
-    public double mean(){
-        return total/N;
+
+    /**
+     * Adds the specified data value to the accumulator.
+     * @param  x the data value
+     */
+    public void addDataValue(double x) {
+        n++;
+        double delta = x - mu;
+        mu  += delta / n;
+        sum += (double) (n - 1) / n * delta * delta;
     }
 
-    @Override
-    public String toString() {
-        return "Mean ("+N+" values): "+String.format("%7.5f",mean());
+    /**
+     * Returns the mean of the data values.
+     * @return the mean of the data values
+     */
+    public double mean() {
+        return mu;
     }
-    public static void main(String[] args){
-        int T=Integer.parseInt(args[0]);
-        Accumulator a=new Accumulator();
-        for (int t=0;t<T;t++){
-            a.addDataValue(StdRandom.random());
+
+    /**
+     * Returns the sample variance of the data values.
+     * @return the sample variance of the data values
+     */
+    public double var() {
+        return sum / (n - 1);
+    }
+
+    /**
+     * Returns the sample standard deviation of the data values.
+     * @return the sample standard deviation of the data values
+     */
+    public double stddev() {
+        return Math.sqrt(this.var());
+    }
+
+    /**
+     * Returns the number of data values.
+     * @return the number of data values
+     */
+    public int count() {
+        return n;
+    }
+
+    /**
+     * Unit tests the <tt>Accumulator</tt> data type.
+     * Reads in a stream of real number from standard input;
+     * adds them to the accumulator; and prints the mean,
+     * sample standard deviation, and sample variance to standard
+     * output.
+     */
+    public static void main(String[] args) {
+        Accumulator stats = new Accumulator();
+        while (!StdIn.isEmpty()) {
+            double x = StdIn.readDouble();
+            stats.addDataValue(x);
         }
-        StdOut.println(a);
+
+        StdOut.printf("N      = %d\n",   stats.count());
+        StdOut.printf("mean   = %.5f\n", stats.mean());
+        StdOut.printf("stddev = %.5f\n", stats.stddev());
+        StdOut.printf("var    = %.5f\n", stats.var());
     }
 }
+
+

@@ -1,5 +1,6 @@
 package Fundamentals.BagsQueuesStacks;
 
+import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -7,8 +8,8 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Josephus {
     public static void main(String[] args) {
-        int M = Integer.parseInt(args[1]);
-        int N = Integer.parseInt(args[0]);
+        int M = StdIn.readInt();
+        int N = StdIn.readInt();
 
         // initialize the queue
         Queue<Integer> q = new Queue<Integer>();
@@ -23,5 +24,6 @@ public class Josephus {
         StdOut.println();
     }
 }
+
 
 

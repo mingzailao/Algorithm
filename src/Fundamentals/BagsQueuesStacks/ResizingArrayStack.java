@@ -1,12 +1,13 @@
 package Fundamentals.BagsQueuesStacks;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by apple on 16/2/25.
  */
 public class ResizingArrayStack<Item> implements Iterable<Item> {
-    private Item[] a =(Item[])new Object[1];
+    private Item[] a =(Item[])new Object[2];
     private int N=0;
     public boolean isEmpty(){
         return N==0;
@@ -33,6 +34,11 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
             resize(a.length/2);
         return item;
     }
+    public Item peek() {
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        return a[N-1];
+    }
+
     @Override
     public Iterator<Item> iterator() {
         return new ReverseArrayIterator();
@@ -42,17 +48,18 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         private int i=N;
         @Override
         public boolean hasNext() {
-            return i>0;
+            return i>=0;
         }
 
         @Override
         public Item next() {
-            return a[--i];
+            if (!hasNext()) throw new NoSuchElementException();
+            return a[i--];
         }
 
         @Override
         public void remove() {
-
+            throw new UnsupportedOperationException();
         }
     }
 }

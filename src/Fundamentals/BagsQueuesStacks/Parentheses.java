@@ -1,52 +1,49 @@
 package Fundamentals.BagsQueuesStacks;
 
 import Fundamentals.BagsQueuesStacks.LinkList.Stack;
-import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Created by apple on 16/2/25.
  */
 public class Parentheses {
-    public static void main(String[] args) {
-        String line = StdIn.readLine();
+    private static final char LEFT_PAREN     = '(';
+    private static final char RIGHT_PAREN    = ')';
+    private static final char LEFT_BRACE     = '{';
+    private static final char RIGHT_BRACE    = '}';
+    private static final char LEFT_BRACKET   = '[';
+    private static final char RIGHT_BRACKET  = ']';
 
+    public static boolean isBalanced(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == LEFT_PAREN)   stack.push(LEFT_PAREN);
+            if (s.charAt(i) == LEFT_BRACE)   stack.push(LEFT_BRACE);
+            if (s.charAt(i) == LEFT_BRACKET) stack.push(LEFT_BRACKET);
 
-        Stack s=new Stack();
-        for (int i=0;i<line.length();i++) {
-            if (line.charAt(i) == '{' || line.charAt(i) == '(' || line.charAt(i) == '[') {
-                s.push(line.charAt(i));
+            if (s.charAt(i) == RIGHT_PAREN) {
+                if (stack.isEmpty())           return false;
+                if (stack.pop() != LEFT_PAREN) return false;
             }
-            else if (line.charAt(i) == '}') {
-                char c = (char) s.pop();
-                if (c != '{') {
-                    StdOut.println("false");
-                    break;
-                }
-            }
-            else if (line.charAt(i) == ']') {
-                char c = (char) s.pop();
-                if (c != '[') {
-                    StdOut.println("false");
-                    break;
-                }
-            }
-            else if (line.charAt(i) == ')') {
-                char c = (char) s.pop();
-                if (c != '(') {
-                    StdOut.println("false");
-                    break;
-                }
-            }
-            else
-                throw new RuntimeException("Error!!!!!!!!!");
 
+            else if (s.charAt(i) == RIGHT_BRACE) {
+                if (stack.isEmpty())           return false;
+                if (stack.pop() != LEFT_BRACE) return false;
+            }
 
+            else if (s.charAt(i) == RIGHT_BRACKET) {
+                if (stack.isEmpty())             return false;
+                if (stack.pop() != LEFT_BRACKET) return false;
+            }
         }
-        if (s.isEmpty())
-            StdOut.println("true");
-        else
-            StdOut.println("false");
+        return stack.isEmpty();
     }
 
+
+    public static void main(String[] args) {
+        In in = new In();
+        String s = in.readAll().trim();
+        StdOut.println(isBalanced(s));
+    }
 }

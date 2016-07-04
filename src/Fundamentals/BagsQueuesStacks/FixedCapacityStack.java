@@ -3,44 +3,62 @@ package Fundamentals.BagsQueuesStacks;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
- * Created by apple on 16/2/25.
+ * Created by apple on 16/7/2.
  */
-public class FixedCapacityStack<Item> {
-    private Item[] a;
-    private int N;
-    private final int Max;
+public class FixedCapacityStack<Item> implements Iterable<Item> {
+    private Item[] a;    // holds the items
+    private int N;       // number of items in stack
 
-    public FixedCapacityStack(int cap) {
-        a=(Item[]) new Object[cap];
-        Max=cap;
+    // create an empty stack with given capacity
+    public FixedCapacityStack(int capacity) {
+        a = (Item[]) new Object[capacity];   // no generic array creation
+        N = 0;
     }
 
-    public void push(Item item){
-        a[N++]=item;
-    }
-    public Item pop(){
-        return  a[--N];
-    }
-    public boolean isEmpty(){
-        return N==0;
-    }
-    public int size(){
-        return N;
-    }
-    public static void main(String[] args){
-        FixedCapacityStack<String> s;
-        s=new FixedCapacityStack<String>(100);
-        while(!StdIn.isEmpty()){
-            String item=StdIn.readString();
-            if (!item.equals("-"))
-                s.push(item);
-            else if (!s.isEmpty())
-                StdOut.print(s.pop()+" ");
+    public boolean isEmpty()          {  return N == 0;                    }
+    public void push(Item item)       {  a[N++] = item;                    }
+    public Item pop()                 {  return a[--N];                    }
+    public Iterator<Item> iterator()  { return new ReverseArrayIterator(); }
+    public boolean isFull()           {  return N==a.length;}
+
+    public class ReverseArrayIterator implements Iterator<Item> {
+        private int i = N-1;
+
+        public boolean hasNext() {
+            return i >= 0;
         }
-        StdOut.println("("+s.size()+" left on stack");
-    }
-//    java-algs4 Fundamentals.BagsQueuesStacks.FixedCapacityStack < ~/IdeaProjects/algs4-data/tobe.txt
-//    to be not that or be (2 left on stack
 
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            return a[i--];
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        int max = Integer.parseInt(args[0]);
+        FixedCapacityStack<String> stack = new FixedCapacityStack<String>(max);
+        while (!StdIn.isEmpty()) {
+            String item = StdIn.readString();
+            if (!item.equals("-")) stack.push(item);
+            else if (stack.isEmpty())  StdOut.println("BAD INPUT");
+            else                       StdOut.print(stack.pop() + " ");
+        }
+        StdOut.println();
+
+        // print what's left on the stack
+        StdOut.print("Left on stack: ");
+        for (String s : stack) {
+            StdOut.print(s + " ");
+        }
+        StdOut.println();
+    }
 }
